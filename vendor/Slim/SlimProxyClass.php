@@ -9,7 +9,7 @@
  * @version 0.0.1
  */
 
-namespace Proxy\Slim;
+namespace Slim;
 
 /**
  * proxy class implements abstract proxy
