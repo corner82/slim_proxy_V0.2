@@ -40,7 +40,7 @@ abstract class AbstractProxy{
      * @var string
      * @since 0.2
      */
-    protected $endPointUrl;
+    protected $restApiEndPoint = "index.php";
     
     /**
      * Redict map according to rest api
@@ -56,7 +56,7 @@ abstract class AbstractProxy{
      * @var string
      * @since 0.2
      */
-    protected $endpointFunction ;
+    protected $restApiEndPointFunction ;
     
     /**
      * rest api call time out
@@ -73,16 +73,35 @@ abstract class AbstractProxy{
     protected $restApiBaseUrl ;
     
     /**
+     * rest api full path url
+     * @var string
+     * @since 0.2
+     */
+    protected $restApiFullPathUrl ;
+    
+    /**
      * get proxy helper function name form redirect map array
      * @return string proxy helper function
      * @author Zeynel Dağlı 
      * @since 0.1
      */
-    protected function resolveRedirectMap() {
-        $this->getEndPointFunction();
-        return $this->redirectMap[$this->endpointFunction];
-        
-    }
+    abstract protected function resolveRedirectMap(); 
+    
+    /**
+     * set fuul path url for rest api
+     * will be implemented in sub class
+     * @author Zeynel Dağlı 
+     * @since 0.1
+     */
+    abstract protected function setRestApiFullPathUrl($restApiEndpointFunction);
+    
+    /**
+     * get fuul path url for rest api
+     * will be implemented in sub class
+     * @author Zeynel Dağlı 
+     * @since 0.1
+     */
+    abstract protected function getRestApiFullPathUrl();
     
     /**
      * set end point function for rest api
@@ -90,7 +109,7 @@ abstract class AbstractProxy{
      * @author Zeynel Dağlı 
      * @since 0.1
      */
-    abstract protected function setEndPointFunction($endpointFunction = '');
+    abstract protected function setRestApiEndPointFunction($restApiEndpointFunction = '');
     
     /**
      * get end point function for rest api
@@ -98,7 +117,7 @@ abstract class AbstractProxy{
      * @author Zeynel Dağlı 
      * @since 0.1
      */
-    abstract protected function getEndPointFunction();
+    abstract protected function getRestApiEndPointFunction();
     
     /**
      * redirect method for proxy helper
@@ -180,8 +199,8 @@ abstract class AbstractProxy{
      * @author Zeynel Dağlı 
      * @since 0.1
      */
-    public function setEndPointUrl($endPointUrl) {
-        $this->endPointUrl = $endPointUrl;
+    public function setRestApiEndPoint($restApiEndPoint) {
+        $this->restApiEndPoint = $restApiEndPoint;
     }
 
     /**
@@ -190,8 +209,8 @@ abstract class AbstractProxy{
      * @author Zeynel Dağlı 
      * @since 0.2
      */
-    public function getEndPointUrl() {
-        return $this->endPointUrl;
+    public function getRestApiEndPoint() {
+        return $this->restApiEndPoint;
     }
     
     /**

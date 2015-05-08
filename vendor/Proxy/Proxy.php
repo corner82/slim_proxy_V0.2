@@ -9,7 +9,7 @@
 
 namespace Proxy;
 
-class Proxy extends Proxy\AbstractProxy {
+class Proxy extends \Proxy\AbstractProxy {
     
     /**
      * invalid url format redirect url
@@ -58,6 +58,10 @@ class Proxy extends Proxy\AbstractProxy {
         return $this->invalidCallUrl = $invalidCallUrl;
     }
     
+    public function __construct() {
+        //parent::__construct();
+    }
+    
     /**
      * get invalid call format redirect url
      * @author Mustafa Zeynel Dağlı
@@ -65,12 +69,6 @@ class Proxy extends Proxy\AbstractProxy {
      */
     protected function getInvalidCallUrl() {
         return $this->invalidCallUrl;
-    }
-
-
-    protected function getEndPointFunction() {
-        $this->endpointFunction == null ? $this->setEndPointFunction() : true ;
-        return $this->endpointFunction;
     }
 
     protected function prepareGetParams(array $paramsArray = null,
@@ -94,16 +92,60 @@ class Proxy extends Proxy\AbstractProxy {
     }
     
     /**
+     * set full path url for rest api
+     * framework
+     * @param string $endpointFunction
+     * @author Zeynel Dağlı
+     * @version 0.0.1
+     */
+    protected function setRestApiFullPathUrl($restApiFullPathUrl) {
+        $this->restApiFullPathUrl = $restApiFullPathUrl;
+    }
+    
+    /**
+     * get full path url for rest api
+     * @return string
+     * @author Mustafa Zeynel Dağlı
+     * @since 0.2
+     */
+    protected function getRestApiFullPathUrl() {
+        return $this->restApiFullPathUrl;
+    }
+    
+    
+    /**
      * set end point function for rest api
      * framework
      * @param string $endpointFunction
      * @author Zeynel Dağlı
      * @version 0.0.1
      */
-    protected function setEndPointFunction($endpointFunction = '') {
+    protected function setRestApiEndPointFunction($restApiEndpointFunction = '') {
         $requestParams = $this->getRequestParams();
         //print_r($requestParams);
-        $this->endpointFunction = $requestParams['url'];
+        $this->restApiEndPointFunction = $requestParams['url'];
+    }
+    
+    /**
+     * get rest api end point function
+     * @return string
+     * @author Mustafa Zeynel Dağlı
+     * @since 0.2
+     */
+    protected function getRestApiEndPointFunction() {
+        $this->restApiEndPointFunction == null ? $this->setRestApiEndPointFunction() : true ;
+        return $this->restApiEndPointFunction;
+    }
+    
+    /**
+     * get proxy helper function name form redirect map array
+     * @return string proxy helper function
+     * @author Zeynel Dağlı 
+     * @since 0.1
+     */
+    protected function resolveRedirectMap() {
+        $this->getRestApiEndPointFunction();
+        return $this->redirectMap[$this->restApiEndPointFunction];
     }
     
     /**
@@ -146,14 +188,15 @@ class Proxy extends Proxy\AbstractProxy {
      */
     public function restApiDefaultCall() {
         $params = null;
-        $params = $this->proxyClass->getRequestParams();
+        $params = $this->getRequestParams();
         $preparedParams = $this->prepareGetParams();
         if (($ch = @curl_init()) == false) {
             header("HTTP/1.1 500", true, 500);
             die("Cannot initialize CURL session. Is CURL enabled for your PHP installation?");
         }
-        //print_r($this->endPointUrl.$this->getEndPointFunction().'?'.$preparedParams);
-        curl_setopt($ch, CURLOPT_URL, $this->endPointUrl.$this->getEndPointFunction().'?'.$preparedParams ); //Url together with parameters
+        //print_r($this->restApiFullPathUrl.'?'.$preparedParams);
+        //print_r($this->restApiBaseUrl.$this->restApiEndPoint.$this->restApiEndPointFunction.'?'.$preparedParams);
+        curl_setopt($ch, CURLOPT_URL, $this->restApiFullPathUrl.'?'.$preparedParams ); //Url together with parameters
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1); //Return data instead printing directly in Browser
         curl_setopt($ch, CURLOPT_CONNECTTIMEOUT , $this->getCallTimeOut()); //Timeout (Default 7 seconds)
         curl_setopt($ch, CURLOPT_HTTPHEADER, array(
@@ -184,8 +227,9 @@ class Proxy extends Proxy\AbstractProxy {
             header("HTTP/1.1 500", true, 500);
             die("Cannot initialize CURL session. Is CURL enabled for your PHP installation?");
         }
+        //print_r($this->restApiFullPathUrl.'?'.$preparedParams);
         //print_r($this->endPointUrl.$this->getEndPointFunction().'?'.$preparedParams);
-        curl_setopt($ch, CURLOPT_URL, $this->endPointUrl.$this->getEndPointFunction().'?'.$preparedParams ); //Url together with parameters
+        curl_setopt($ch, CURLOPT_URL, $this->restApiFullPathUrl.'?'.$preparedParams ); //Url together with parameters
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1); //Return data instead printing directly in Browser
         curl_setopt($ch, CURLOPT_CONNECTTIMEOUT , $this->getCallTimeOut()); //Timeout (Default 7 seconds)
         curl_setopt($ch, CURLOPT_HTTPHEADER, array(
@@ -216,8 +260,9 @@ class Proxy extends Proxy\AbstractProxy {
             header("HTTP/1.1 500", true, 500);
             die("Cannot initialize CURL session. Is CURL enabled for your PHP installation?");
         }
+        //print_r($this->restApiFullPathUrl.'?'.$preparedParams);
         //print_r($this->endPointUrl.$this->getEndPointFunction().'?'.$preparedParams);
-        curl_setopt($ch, CURLOPT_URL, $this->endPointUrl.$this->getEndPointFunction().'?'.$preparedParams ); //Url together with parameters
+        curl_setopt($ch, CURLOPT_URL, $this->restApiFullPathUrl ); //Url together with parameters
         curl_setopt($ch, CURLOPT_POST, 1);
         curl_setopt($ch, CURLOPT_POSTFIELDS,$params);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1); //Return data instead printing directly in Browser
