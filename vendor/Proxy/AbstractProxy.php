@@ -1,12 +1,9 @@
 <?php
 /**
- * ECOMAN Rest Api Proxy Library
+ * Rest Api Proxy Library
  *
- * @link      https://github.com/Leadera/ecoman_slim/tree/ecoman_proxy for the canonical source repository
- * @copyright Copyright (c) 2014 - 2015 
- * @license   https://github.com/Leadera/ecoman_slim/blob/slim2/LICENSE
  * @author Zeynel Dağlı
- * @version 0.0.1
+ * @version 0.1
  */
 
 namespace Proxy;
@@ -62,10 +59,24 @@ abstract class AbstractProxy{
     protected $endpointFunction ;
     
     /**
+     * rest api call time out
+     * @var int
+     * @since 0.2
+     */
+    protected $callTimeOut = 7;
+    
+    /**
+     * rest api call base url
+     * @var string
+     * @since 0.2
+     */
+    protected $restApiBaseUrl ;
+    
+    /**
      * get proxy helper function name form redirect map array
      * @return string proxy helper function
      * @author Zeynel Dağlı 
-     * @since 0.0.1
+     * @since 0.1
      */
     protected function resolveRedirectMap() {
         $this->getEndPointFunction();
@@ -77,7 +88,7 @@ abstract class AbstractProxy{
      * set end point function for rest api
      * will be implemented in sub class
      * @author Zeynel Dağlı 
-     * @since 0.0.1
+     * @since 0.1
      */
     abstract protected function setEndPointFunction($endpointFunction = '');
     
@@ -85,7 +96,7 @@ abstract class AbstractProxy{
      * get end point function for rest api
      * will be implemented in sub class
      * @author Zeynel Dağlı 
-     * @since 0.0.1
+     * @since 0.1
      */
     abstract protected function getEndPointFunction();
     
@@ -93,7 +104,7 @@ abstract class AbstractProxy{
      * redirect method for proxy helper
      * will be implemented in sub class
      * @author Zeynel Dağlı 
-     * @since 0.0.1
+     * @since 0.1
      */
     abstract public function redirect();
     
@@ -101,7 +112,7 @@ abstract class AbstractProxy{
      * request params are getting ready for rest api call
      * will be implemented in sub class
      * @author Zeynel Dağlı 
-     * @since 0.0.1
+     * @since 0.1
      */
     abstract protected function prepareGetParams(Array $paramsArray=null, Array $ignoreParamList=null);
     
@@ -109,17 +120,38 @@ abstract class AbstractProxy{
      * add mapping object for rest api and proxy helper function rrelatin
      * will be implemented in sub class
      * @author Zeynel Dağlı 
-     * @since 0.0.1
+     * @since 0.1
      */
     abstract public function addRedirectMapFunction(Array $redirectFunctionMapping=null);
     
     /**
+     * to make 'POST' rest api call
+     * @author Zeynel Dağlı 
+     * @since 0.2
+     */
+    abstract public function restApiPostCall();
+    
+    /**
+     * to make 'POST' rest api call
+     * @author Zeynel Dağlı 
+     * @since 0.2
+     */
+    abstract public function restApiGetCall();
+    
+    /**
+     * to make rest api call
+     * @author Zeynel Dağlı 
+     * @since 0.2
+     */
+    abstract public function restApiDefaultCall();
+    
+    
+    /**
      * to set endpoint function by any closure
      * @author Zeynel Dağlı 
-     * @since 0.0.1
+     * @since 0.1
      */
-    abstract public function setEndPointByClosure(Array $EndPointClosure=null);
-    
+    abstract public function setEndPointByClosure();
 
     /**
      * get map array for request calls and proxy helper function
@@ -195,7 +227,14 @@ abstract class AbstractProxy{
             case 'post':
                 $this->requestParams = $_POST;
                 break;
+            case 'put':
+                $this->requestParams = $_PUT;
+                break;
+            case 'delete':
+                $this->requestParams = $_DELETE;
+                break;
             default:
+                $this->requestParams = $_POST;
                 break;
         }
     }
@@ -216,6 +255,7 @@ abstract class AbstractProxy{
      * @param \Proxy\Proxy\AbstractProxyHelper $proxyHelper
      * @author Zeynel Dağlı 
      * @version 0.1
+     * @deprecated since version 0.2
      */
     protected function setProxyHelper(\Proxy\Proxy\AbstractProxyHelper $proxyHelper) {
         $this->proxyHelperObj = $proxyHelper;
@@ -226,8 +266,49 @@ abstract class AbstractProxy{
      * @return \Proxy\Proxy\AbstractProxyHelper
      * @author Zeynel Dağlı 
      * @version 0.1
+     * @deprecated since version 0.2
      */
     protected function getProxyHelper() {
         return $this->proxyHelperObj;
+    }
+    
+    /**
+     * set time out parameter for request call
+     * @param String $endPointUrl
+     * @author Zeynel Dağlı 
+     * @since 0.2
+     */
+    public function setCallTimeOut($callTimeOut) {
+        $this->callTimeOut = $callTimeOut;
+    }
+
+    /**
+     * get time out parameter for request call
+     * @return String | null
+     * @author Zeynel Dağlı 
+     * @since 0.2
+     */
+    public function getCallTimeOut() {
+        return $this->callTimeOut;
+    }
+    
+    /**
+     * set base url parameter for request call
+     * @param String $restApiBaseUrl
+     * @author Zeynel Dağlı 
+     * @since 0.2
+     */
+    public function setRestApiBaseUrl($restApiBaseUrl) {
+        $this->restApiBaseUrl = $restApiBaseUrl;
+    }
+
+    /**
+     * get base url  parameter for request call
+     * @return String | null
+     * @author Zeynel Dağlı 
+     * @since 0.2
+     */
+    public function getRestApiBaseUrl() {
+        return $this->restApiBaseUrl;
     }
 }

@@ -26,4 +26,29 @@ class SlimProxyClass extends \Proxy\Proxy\AbstractProxy {
 
     }
 
+    protected function getEndPointFunction() {
+        
+    }
+
+    protected function prepareGetParams(array $paramsArray = null,
+            array $ignoreParamList = null) {
+        
+    }
+
+    protected function setEndPointFunction($endpointFunction = '') {
+        
+    }
+
+    public function addRedirectMapFunction(array $redirectFunctionMapping = null) {
+        
+    }
+
+    public function redirect() {
+        
+    }
+
+    public function setEndPointByClosure(array $EndPointClosure = null) {
+        
+    }
+
 }
