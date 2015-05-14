@@ -19,7 +19,8 @@ require_once 'vendor\Proxy\Proxy.php';
 require_once 'vendor\Slim\SlimTestProxy.php';*/
 
 
-$proxyClass = new \vendor\Slim\SlimTestProxy();
+//$proxyClass = new \vendor\Slim\SlimTestProxy();
+$proxyClass = new \vendor\Slim\SlimHmacProxy();
 $proxyClass->setRestApiBaseUrl("http://localhost/slim_test/");
 $proxyClass->setRestApiEndPoint("index.php/");
 //$proxyClass->setEndPointUrl('http://88.249.18.205:8090/slim2_ecoman/index.php/');

@@ -70,6 +70,12 @@ class Proxy extends \vendor\Proxy\AbstractProxy {
     protected function getInvalidCallUrl() {
         return $this->invalidCallUrl;
     }
+    
+    protected function removePublicKeyParam() {
+        if(!empty($this->requestParams)) {
+            if(isset($this->requestParams['pk'])) unset($this->requestParams['pk']);
+        }
+    }
 
     protected function prepareGetParams(array $paramsArray = null,
             array $ignoreParamList = null) {
@@ -221,7 +227,7 @@ class Proxy extends \vendor\Proxy\AbstractProxy {
      */
     public function restApiGetCall() {
         $params = null;
-        $params = $this->proxyClass->getRequestParams();
+        $params = $this->getRequestParams();
         $preparedParams = $this->prepareGetParams();
         if (($ch = @curl_init()) == false) {
             header("HTTP/1.1 500", true, 500);
@@ -254,7 +260,7 @@ class Proxy extends \vendor\Proxy\AbstractProxy {
      */
     public function restApiPostCall() {
         $params = null;
-        $params = $this->proxyClass->getRequestParams();
+        $params = $this->getRequestParams();
         $preparedParams = $this->prepareGetParams();
         if (($ch = @curl_init()) == false) {
             header("HTTP/1.1 500", true, 500);
