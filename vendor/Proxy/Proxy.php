@@ -7,9 +7,9 @@
  * @version 0.1
  */
 
-namespace Proxy;
+namespace vendor\Proxy;
 
-class Proxy extends \Proxy\AbstractProxy {
+class Proxy extends \vendor\Proxy\AbstractProxy {
     
     /**
      * invalid url format redirect url

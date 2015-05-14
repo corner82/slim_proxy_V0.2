@@ -1,8 +1,8 @@
 <?php
 
-namespace ExtendedProxy;
+namespace vendor\ExtendedProxy;
 
-class Proxy extends Proxy\Proxy {
+class Proxy extends vendor\Proxy\Proxy {
     
 public function __construct() {
     parent::__construct();

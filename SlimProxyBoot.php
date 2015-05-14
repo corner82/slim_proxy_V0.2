@@ -8,12 +8,18 @@
  * @author Zeynel Dağlı
  * @version 0.0.1
  */
+require_once 'vendor\SPR0\AutoLoad\spr0Loader.php';
+
+$classLoader = new \SPR0\AutoLoad\spr0Loader("vendor", '');
+$classLoader->register();
+
+/*
 require_once 'vendor\Proxy\AbstractProxy.php';
 require_once 'vendor\Proxy\Proxy.php';   
-require_once 'vendor\Slim\SlimTestProxy.php';
+require_once 'vendor\Slim\SlimTestProxy.php';*/
 
 
-$proxyClass = new \Slim\SlimTestProxy();
+$proxyClass = new \vendor\Slim\SlimTestProxy();
 $proxyClass->setRestApiBaseUrl("http://localhost/slim_test/");
 $proxyClass->setRestApiEndPoint("index.php/");
 //$proxyClass->setEndPointUrl('http://88.249.18.205:8090/slim2_ecoman/index.php/');

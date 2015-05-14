@@ -6,7 +6,7 @@
  * @version 0.1
  */
 
-namespace Proxy;
+namespace vendor\Proxy;
 
 /**
  * abstract base class for proxy wrappers

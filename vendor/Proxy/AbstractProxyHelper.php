@@ -10,7 +10,7 @@
  * @deprecated since version 0.2
  */
 
-namespace Proxy;
+namespace vendor\Proxy;
 
 /**
  * base abstract class for proxy helpers

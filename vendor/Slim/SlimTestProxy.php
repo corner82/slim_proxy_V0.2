@@ -1,8 +1,8 @@
 <?php
 
-namespace Slim;
+namespace vendor\Slim;
 
-class SlimTestProxy extends \Proxy\Proxy {
+class SlimTestProxy extends \vendor\Proxy\Proxy {
     
      /**
      * a mapping array for related functions and proxy calls
