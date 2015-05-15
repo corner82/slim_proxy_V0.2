@@ -17,14 +17,21 @@ abstract class AbstractProxy{
      * @var string
      * @since 0.1
      */
-    private $requestType;
+    protected $requestType;
     
     /**
      * Rest service request params
      * @var string
      * @since 0.1
      */
-    private $requestParams;
+    protected $requestParams;
+    
+    /**
+     * Rest service request params
+     * @var string
+     * @since 0.1
+     */
+    protected $requestParamsWithoutPublicKey;
     
     /**
      * Proxy helper class 
@@ -267,6 +274,61 @@ abstract class AbstractProxy{
     public function getRequestParams() {
         $this->requestParams==null ? $this->setRequestParams() : true ;
         return $this->requestParams;
+    }
+    
+    /**
+     * remove public key from request parameters
+     * @author Zeynel Dağlı
+     * @since 0.2
+     */
+    protected function removePublicKeyParam() {
+        if(!empty($this->requestParamsWithoutPublicKey)) {
+            if(isset($this->requestParamsWithoutPublicKey['pk'])) unset($this->requestParamsWithoutPublicKey['pk']);
+        }
+    }
+    
+    /**
+     * set request parameters without public key
+     * @author Zeynel Dağlı
+     * @since 0.2
+     */
+    public function setRequestParamsWithoutPublicKey () {
+        if(!empty($this->requestParams)) {
+            $this->requestParamsWithoutPublicKey = $this->requestParams;
+            $this->removePublicKeyParam();
+        }
+         else {
+            switch (strtolower(trim($this->getRequestType()))) {
+                case 'get':
+                    $this->requestParams = $_GET;
+                    break;
+                case 'post':
+                    $this->requestParams = $_POST;
+                    break;
+                case 'put':
+                    $this->requestParams = $_PUT;
+                    break;
+                case 'delete':
+                    $this->requestParams = $_DELETE;
+                    break;
+                default:
+                    $this->requestParams = $_POST;
+                    break;
+            }
+            $this->requestParamsWithoutPublicKey = $this->requestParams;
+            $this->removePublicKeyParam();
+        }
+    }
+    
+    /**
+     * get request parameters without public key
+     * @return array | null
+     * @author Zeynel Dağlı 
+     * @version 0.2
+     */
+    public function getRequestParamsWithoutPublicKey() {
+        $this->requestParamsWithoutPublicKey==null ? $this->setRequestParamsWithoutPublicKey() : true ;
+        return $this->requestParamsWithoutPublicKey;
     }
     
     /**
