@@ -1,5 +1,11 @@
 <?php
 
+/**
+ * Rest Api Proxy Library
+ *
+ * @author Zeynel Dağlı
+ * @version 0.2
+ */
 namespace vendor\hmac;
 
 class Hmac {
@@ -26,12 +32,12 @@ class Hmac {
     }
     
     public function makeHmac() {
-        
+        $this->hash = hash_hmac('sha256', json_encode($this->requestParams), $this->privateKey);
     }
     
     public function setPublicKey($publicKey = null) {
         $this->publicKey = $publicKey;
-    }
+    } 
     
     public function getPublicKey() {
         return $this->publicKey;
