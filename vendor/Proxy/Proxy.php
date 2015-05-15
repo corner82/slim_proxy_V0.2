@@ -70,17 +70,11 @@ class Proxy extends \vendor\Proxy\AbstractProxy {
     protected function getInvalidCallUrl() {
         return $this->invalidCallUrl;
     }
-    
-    protected function removePublicKeyParam() {
-        if(!empty($this->requestParams)) {
-            if(isset($this->requestParams['pk'])) unset($this->requestParams['pk']);
-        }
-    }
 
     protected function prepareGetParams(array $paramsArray = null,
             array $ignoreParamList = null) {
         $params = null;
-        $paramsArray = $this->getRequestParams();
+        $paramsArray = $this->getRequestParamsWithoutPublicKey();
         if(!empty($ignoreParamList)) {
             foreach($paramsArray as $key=>$value) {
                if(!in_array ($key, $ignoreParamList)) {
