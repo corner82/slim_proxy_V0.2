@@ -42,7 +42,7 @@ class SlimHmacProxy extends \vendor\Proxy\Proxy {
         $this->hmacObj->setPrivateKey('e249c439ed7697df2a4b045d97d4b9b7e1854c3ff8dd668c779013653913572e');
         $this->hmacObj->setRequestParams($this->getRequestParamsWithoutPublicKey());
         $this->hmacObj->makeHmac();
-        print_r($this->hmacObj);
+        //print_r($this->hmacObj);
         
         $preparedParams = $this->prepareGetParams();
         //$preparedParams = $this->prepareGetParams('', array('pk'));
