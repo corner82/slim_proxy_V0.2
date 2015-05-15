@@ -40,11 +40,12 @@ class SlimHmacProxy extends \vendor\Proxy\Proxy {
         $params = $this->getRequestParams();
         $this->hmacObj->setPublicKey($params['pk']);
         $this->hmacObj->setPrivateKey('e249c439ed7697df2a4b045d97d4b9b7e1854c3ff8dd668c779013653913572e');
-        $this->hmacObj->setRequestParams($params);
-        $this->removePublicKeyParam();
+        $this->hmacObj->setRequestParams($this->getRequestParamsWithoutPublicKey());
+        $this->hmacObj->makeHmac();
         print_r($this->hmacObj);
-        $preparedParams = $this->prepareGetParams(null, array('pk'));
-        //$preparedParams = $this->prepareGetParams();
+        
+        $preparedParams = $this->prepareGetParams();
+        //$preparedParams = $this->prepareGetParams('', array('pk'));
         if (($ch = @curl_init()) == false) {
             header("HTTP/1.1 500", true, 500);
             die("Cannot initialize CURL session. Is CURL enabled for your PHP installation?");
@@ -55,8 +56,8 @@ class SlimHmacProxy extends \vendor\Proxy\Proxy {
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1); //Return data instead printing directly in Browser
         curl_setopt($ch, CURLOPT_CONNECTTIMEOUT , $this->getCallTimeOut()); //Timeout (Default 7 seconds)
         curl_setopt($ch, CURLOPT_HTTPHEADER, array(
-            'X-Public: 0',
-            'X-Hash: 143444,12'
+            'X-Public: '.$this->hmacObj->getPublicKey().'',
+            'X-Hash: '.$this->hmacObj->getHash().''
         ));
         curl_setopt($ch, CURLOPT_HEADER, 0); // we don’t want also to get the header information that we receive.
  
