@@ -2,7 +2,7 @@
 
 namespace vendor\Encrypt;
 
-class EncryptManual extends vendor\Encrypt\AbstractEncrypt {
+class EncryptManual extends \vendor\Encrypt\AbstractEncrypt {
     protected  $_hash_lenght;
     protected  $_key;
     protected  $_salt='d41d8cd98f00b204e9800998ecf8427e';

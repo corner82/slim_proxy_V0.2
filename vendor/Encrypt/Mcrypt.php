@@ -2,7 +2,7 @@
 
 namespace vendor\Encrypt;
 
-class EncryptManual extends vendor\Encrypt\AbstractEncrypt {
+class EncryptManual extends \vendor\Encrypt\AbstractEncrypt {
     private $_mcrypt_algorithms=array();
     private $_mcrypt_algorithm=MCRYPT_RIJNDAEL_256;
     private $_mcrypt_algorithms_dir;
