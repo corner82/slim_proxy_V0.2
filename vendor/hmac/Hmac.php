@@ -19,7 +19,8 @@ class Hmac {
     protected $requestParams = array();
     
     protected $nonce = null;
-
+    
+    protected $timeStamp = null;
 
     public function __construct() {
         
@@ -38,7 +39,7 @@ class Hmac {
             $this->nonce = md5(time().rand());
         } else {
             $this->nonce = $nonce;
-        }
+        }        
         //print_r('!!!!'.$this->nonce.'!!!!');
     }
     
@@ -47,7 +48,49 @@ class Hmac {
         //print_r('// get nonce()--'.$this->nonce.'//');
         return $this->nonce;
     }
-
+    
+     /**
+     * set timestamp 
+     * framework
+     * @param string $timeStamp
+     * @author Okan Cıran
+     * @version 0.0.1
+     */
+      public function setTimeStamp($timeStamp = null) {
+        if($timeStamp == null) {
+            $this->timeStamp = time();
+         } else {
+            $this->timeStamp = $timeStamp;
+        }   
+    }
+    
+     /**
+     * get timestamp 
+     * framework
+     * 
+     * @author Okan Cıran
+     * @version 0.0.1
+     */
+    public function getTimeStamp() {
+        return $this->timeStamp;
+    }   
+    
+     /**
+     * difference timestamp 
+     * framework
+     * @param string $timeStamp
+     * @author Okan Cıran
+     * @version 0.0.1
+     */
+      public function differenceTimeStamp() {
+        if(getTimeStamp() != null) {
+            return time() - getTimeStamp();
+         } else {
+            return null;
+        } 
+         print_r('// differenceTimeStamp()--'.$this->differenceTimeStamp().'//');
+    } 
+       
     public function makeHmac() {
         //HMAC(HMAC(MESSAGE, user_password), application_key)
         $this->setNonce();
