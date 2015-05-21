@@ -58,7 +58,7 @@ class SlimHmacProxy extends \vendor\Proxy\Proxy {
         curl_setopt($ch, CURLOPT_HTTPHEADER, array(
             'X-Public: '.$this->hmacObj->getPublicKey().'',
             'X-Hash: '.$this->hmacObj->getHash().'',
-            'X-Nonce' .$this->hmacObj->getNonce()
+            'X-Nonce:' .$this->hmacObj->getNonce()
         ));
         curl_setopt($ch, CURLOPT_HEADER, 0); // we don’t want also to get the header information that we receive.
  

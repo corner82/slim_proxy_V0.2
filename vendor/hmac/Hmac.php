@@ -18,7 +18,7 @@ class Hmac {
     
     protected $requestParams = array();
     
-    protected $nonce;
+    protected $nonce = null;
 
 
     public function __construct() {
@@ -33,17 +33,24 @@ class Hmac {
         return $this->hash;
     }
     
-    public function setNonce() {
-        $this->nonce = md5(time() . rand());
+    public function setNonce($nonce = null) {
+        if($nonce == null) {
+            $this->nonce = md5(time().rand());
+        } else {
+            $this->nonce = $nonce;
+        }
+        //print_r('!!!!'.$this->nonce.'!!!!');
     }
     
     public function getNonce() {
-        if($this->nonce==null) $this->setNonce ();
+        //if($this->nonce==null) $this->setNonce();
+        //print_r('// get nonce()--'.$this->nonce.'//');
         return $this->nonce;
     }
 
     public function makeHmac() {
         //HMAC(HMAC(MESSAGE, user_password), application_key)
+        $this->setNonce();
         $this->hash = hash_hmac('sha256', hash_hmac('sha256', json_encode($this->requestParams),  $this->getNonce()), $this->privateKey);
         //$this->hash = hash_hmac('sha256', json_encode($this->requestParams), $this->privateKey);
     }
