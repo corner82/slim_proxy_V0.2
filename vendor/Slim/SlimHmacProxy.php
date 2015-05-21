@@ -37,7 +37,12 @@ class SlimHmacProxy extends \vendor\Proxy\Proxy {
      */
     public function restApiDefaultCall() {
         $encrypt = new \vendor\Encrypt\EncryptManual('test');
-        $encrypt->encrypt_times(4, 'kullanici:sifre');
+        $encryptValue = $encrypt->encrypt_times(4, 'kullanici:sifre');
+        print_r('--'.$encryptValue.'--');
+        
+        $decryptValue = $encrypt->decrypt_times(4, $encryptValue);
+        print_r('??'.$decryptValue.'??');
+        
         $params = null;
         $params = $this->getRequestParams();
         $this->hmacObj->setPublicKey($params['pk']);
