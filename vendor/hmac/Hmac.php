@@ -17,6 +17,8 @@ class Hmac {
     protected $privateKey;
     
     protected $requestParams = array();
+    
+    protected $nonce;
 
 
     public function __construct() {
@@ -31,8 +33,19 @@ class Hmac {
         return $this->hash;
     }
     
+    public function setNonce() {
+        $this->nonce = md5(time() . rand());
+    }
+    
+    public function getNonce() {
+        if($this->nonce==null) $this->setNonce ();
+        return $this->nonce;
+    }
+
     public function makeHmac() {
-        $this->hash = hash_hmac('sha256', json_encode($this->requestParams), $this->privateKey);
+        //HMAC(HMAC(MESSAGE, user_password), application_key)
+        $this->hash = hash_hmac('sha256', hash_hmac('sha256', json_encode($this->requestParams),  $this->getNonce()), $this->privateKey);
+        //$this->hash = hash_hmac('sha256', json_encode($this->requestParams), $this->privateKey);
     }
     
     public function setPublicKey($publicKey = null) {
