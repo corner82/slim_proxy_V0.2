@@ -41,5 +41,9 @@ $RECYCLE.BIN/
 Network Trash Folder
 Temporary Items
 .apdisk
+<<<<<<< HEAD
 /nbproject/private/
 /nbproject/
+=======
+/nbproject/private/
+>>>>>>> origin/master
