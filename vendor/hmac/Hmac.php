@@ -43,7 +43,7 @@ class Hmac {
         //print_r('!!!!'.$this->nonce.'!!!!');
     }
     
-    protected function getNonce() {
+    public function getNonce() {
         //if($this->nonce==null) $this->setNonce();
         //print_r('// get nonce()--'.$this->nonce.'//');
         return $this->nonce;
@@ -56,7 +56,7 @@ class Hmac {
      * @author Okan Cıran
      * @version 0.0.1
      */
-      protected function setTimeStamp($timeStamp = null) {
+      public function setTimeStamp($timeStamp = null) {
         if($timeStamp == null) {
             $this->timeStamp = time();
          } else {
@@ -71,7 +71,7 @@ class Hmac {
      * @author Okan Cıran
      * @version 0.0.1
      */
-    protected function getTimeStamp() {
+    public function getTimeStamp() {
         return $this->timeStamp;
     }   
     
@@ -82,7 +82,7 @@ class Hmac {
      * @author Okan Cıran
      * @version 0.0.1
      */
-      protected function differenceTimeStamp() {
+      public function differenceTimeStamp() {
         if(getTimeStamp() != null) {
             return time() - getTimeStamp();
          } else {
