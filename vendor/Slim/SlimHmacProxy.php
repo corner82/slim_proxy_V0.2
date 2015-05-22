@@ -65,7 +65,7 @@ class SlimHmacProxy extends \vendor\Proxy\Proxy {
             'X-Public: '.$this->hmacObj->getPublicKey().'',
             'X-Hash: '.$this->hmacObj->getHash().'',
             'X-Nonce:'.$this->hmacObj->getNonce(),
-            'X-TimeStamp:'.$this->hmacObj->getTimeStamp()  /// replay attack lar için oki
+            'X-TimeStamp:'.$this->hmacObj->setTimeStamp()  /// replay attack lar için oki
         ));
         curl_setopt($ch, CURLOPT_HEADER, 0); // we don’t want also to get the header information that we receive.
  
