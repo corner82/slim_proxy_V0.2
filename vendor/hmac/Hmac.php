@@ -88,13 +88,13 @@ class Hmac {
          } else {
             return null;
         } 
-         print_r('// differenceTimeStamp()--'.$this->differenceTimeStamp().'//');
+        // print_r('// differenceTimeStamp()--'.$this->differenceTimeStamp().'//');
     } 
        
     public function makeHmac() {
-        //HMAC(HMAC(MESSAGE, user_password), application_key)
         $this->setNonce();
         $this->hash = hash_hmac('sha256', hash_hmac('sha256', json_encode($this->requestParams),  $this->getNonce()), $this->privateKey);
+        //print_r('--'.$this->hash.'--');
         //$this->hash = hash_hmac('sha256', json_encode($this->requestParams), $this->privateKey);
     }
     

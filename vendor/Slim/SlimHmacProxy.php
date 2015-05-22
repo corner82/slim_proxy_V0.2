@@ -36,12 +36,11 @@ class SlimHmacProxy extends \vendor\Proxy\Proxy {
      * @version 0.2
      */
     public function restApiDefaultCall() {
-        $encrypt = new \vendor\Encrypt\EncryptManual('test');
+        /*$encrypt = new \vendor\Encrypt\EncryptManual('test');
         $encryptValue = $encrypt->encrypt_times(4, 'kullanici:sifre');
-        print_r('--'.$encryptValue.'--');
-        
+        //print_r('--'.$encryptValue.'--');
         $decryptValue = $encrypt->decrypt_times(4, $encryptValue);
-        print_r('??'.$decryptValue.'??');
+        //print_r('??'.$decryptValue.'??');*/
         
         $params = null;
         $params = $this->getRequestParams();
