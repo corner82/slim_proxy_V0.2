@@ -70,7 +70,7 @@ abstract class AbstractProxy{
      * @var int
      * @since 0.2
      */
-    protected $callTimeOut = 7;
+    protected $callTimeOut = 15;
     
     /**
      * rest api call base url

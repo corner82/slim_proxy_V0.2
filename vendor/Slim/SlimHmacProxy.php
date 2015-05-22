@@ -68,9 +68,10 @@ class SlimHmacProxy extends \vendor\Proxy\Proxy {
             'X-TimeStamp:'.$this->hmacObj->setTimeStamp()  /// replay attack lar için oki
         ));
         curl_setopt($ch, CURLOPT_HEADER, 0); // we don’t want also to get the header information that we receive.
- 
+        sleep(10);
         $response = curl_exec($ch);
         $http_code = curl_getinfo($ch ,CURLINFO_HTTP_CODE);
+    
         if ($response == false) {
             die("curl_exec() failed. Error: " . curl_error($ch));
         }
