@@ -56,9 +56,7 @@ class Hmac {
      * @author Okan Cıran
      * @version 0.0.1
      */
- 
       protected function setTimeStamp($timeStamp = null) {
- 
         if($timeStamp == null) {
             $this->timeStamp = time();
          } else {
@@ -73,9 +71,7 @@ class Hmac {
      * @author Okan Cıran
      * @version 0.0.1
      */
- 
     protected function getTimeStamp() {
- 
         return $this->timeStamp;
     }   
     
@@ -86,9 +82,7 @@ class Hmac {
      * @author Okan Cıran
      * @version 0.0.1
      */
- 
       protected function differenceTimeStamp() {
- 
         if(getTimeStamp() != null) {
             return time() - getTimeStamp();
          } else {
@@ -128,4 +122,3 @@ class Hmac {
         return $this->requestParams;
     }
 }
- 
