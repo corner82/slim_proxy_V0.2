@@ -34,7 +34,7 @@ class Hmac {
         return $this->hash;
     }
     
-    public function setNonce($nonce = null) {
+    protected function setNonce($nonce = null) {
         if($nonce == null) {
             $this->nonce = md5(time().rand());
         } else {
@@ -43,7 +43,7 @@ class Hmac {
         //print_r('!!!!'.$this->nonce.'!!!!');
     }
     
-    public function getNonce() {
+    protected function getNonce() {
         //if($this->nonce==null) $this->setNonce();
         //print_r('// get nonce()--'.$this->nonce.'//');
         return $this->nonce;
