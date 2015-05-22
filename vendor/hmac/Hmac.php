@@ -34,7 +34,7 @@ class Hmac {
         return $this->hash;
     }
     
-    protected function setNonce($nonce = null) {
+    public function setNonce($nonce = null) {
         if($nonce == null) {
             $this->nonce = md5(time().rand());
         } else {
@@ -43,7 +43,7 @@ class Hmac {
         //print_r('!!!!'.$this->nonce.'!!!!');
     }
     
-    protected function getNonce() {
+    public function getNonce() {
         //if($this->nonce==null) $this->setNonce();
         //print_r('// get nonce()--'.$this->nonce.'//');
         return $this->nonce;
@@ -56,7 +56,7 @@ class Hmac {
      * @author Okan Cıran
      * @version 0.0.1
      */
-      protected function setTimeStamp($timeStamp = null) {
+      public function setTimeStamp($timeStamp = null) {
         if($timeStamp == null) {
             $this->timeStamp = time();
          } else {
@@ -71,7 +71,7 @@ class Hmac {
      * @author Okan Cıran
      * @version 0.0.1
      */
-    protected function getTimeStamp() {
+    public function getTimeStamp() {
         return $this->timeStamp;
     }   
     
@@ -82,7 +82,7 @@ class Hmac {
      * @author Okan Cıran
      * @version 0.0.1
      */
-      protected function differenceTimeStamp() {
+      public function differenceTimeStamp() {
         if(getTimeStamp() != null) {
             return time() - getTimeStamp();
          } else {
@@ -94,7 +94,6 @@ class Hmac {
     public function makeHmac() {
         //HMAC(HMAC(MESSAGE, user_password), application_key)
         $this->setNonce();
-        $this->setTimeStamp(); 
         $this->hash = hash_hmac('sha256', hash_hmac('sha256', json_encode($this->requestParams),  $this->getNonce()), $this->privateKey);
         //$this->hash = hash_hmac('sha256', json_encode($this->requestParams), $this->privateKey);
     }
