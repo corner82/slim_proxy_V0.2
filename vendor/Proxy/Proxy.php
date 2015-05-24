@@ -28,6 +28,23 @@ class Proxy extends \vendor\Proxy\AbstractProxy {
     protected $invalidCallFunc = "invalid";
     
     /**
+     * encrypt class obj
+     * @var \vendor\Encrypt\AbstractEncrypt
+     * @author Mustafa Zeynel Dağlı
+     * @since 0.2
+     */
+    protected $encryptClass;
+    
+    /**
+     * encrypt class key
+     * @var string
+     * @author Mustafa Zeynel Dağlı
+     * @since version 0.2
+     */
+    protected $encryptKey = 'testKey';
+
+    
+    /**
      * set invalid call format redirect function
      * @param type $invalidCallFunc
      * @return string
@@ -60,6 +77,38 @@ class Proxy extends \vendor\Proxy\AbstractProxy {
     
     public function __construct() {
         //parent::__construct();
+    }
+    
+    /**
+     * set encrytion class obj
+     * @param \vendor\Encrypt\AbstractEncrypt $encrypyClass
+     * @author Mustafa Zeynel Dağlı
+     */
+    public function setEncryptClass(\vendor\Encrypt\AbstractEncrypt $encryptClass = null) {
+        try {
+            if($encryptClass == null) {
+                $this->encryptClass = new \vendor\Encrypt\EncryptManual($this->encryptKey);
+                //print_r($this->encryptClass);
+            } else {
+                $this->encryptClass = $encryptClass;
+            }
+            return $this->encryptClass;
+        } catch (Exception $exc) {
+            echo $exc->getTraceAsString();
+        }
+    }
+    
+    /**
+     * get encrytion class obj
+     * @return \vendor\Encrypt\AbstractEncrypt
+     * @author Mustafa Zeynel Dağlı
+     */
+    public function getEncryptClass() {
+        if($this->encryptClass == null){
+            $this->setEncryptClass();
+        }else {
+            return $this->encryptClass;
+        }
     }
     
     /**

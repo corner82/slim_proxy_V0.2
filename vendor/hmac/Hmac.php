@@ -18,10 +18,10 @@ class Hmac {
     
     protected $requestParams = array();
     
-    protected $nonce = null;
+    protected $nonce;
     
-    protected $timeStamp = null;
-
+    protected $timeStamp;
+    
     public function __construct() {
         
     }
