@@ -65,6 +65,7 @@ class SlimHmacProxy extends \vendor\Proxy\Proxy {
             'X-Public: '.$this->hmacObj->getPublicKey().'',
             'X-Hash: '.$this->hmacObj->getHash().'',
             'X-Nonce:'.$this->hmacObj->getNonce(),
+            //'X-IP:'.serialize($_SERVER),
             'X-TimeStamp:'.$this->hmacObj->setTimeStamp($this->encryptClass
                                                              ->encrypt(''.time().''))  /// replay attack lar için oki
         ));
