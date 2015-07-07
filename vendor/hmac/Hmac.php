@@ -5,6 +5,7 @@
  *
  * @author Zeynel Dağlı
  * @version 0.2
+ * @todo Nonce parameter will be encrypted and decrypted in http request 'X-NONCE' parameter
  */
 namespace vendor\hmac;
 
@@ -34,6 +35,13 @@ class Hmac {
         return $this->hash;
     }
     
+    /**
+     * to make every request hash , random variables
+     * are inserted into hash cretae mechanism, this function
+     * sets random parameter
+     * @param string | null $nonce
+     * @author Mustafa Zeynel Dağlı
+     */
     public function setNonce($nonce = null) {
         if($nonce == null) {
             $this->nonce = md5(time().rand());
@@ -43,6 +51,11 @@ class Hmac {
         //print_r('!!!!'.$this->nonce.'!!!!');
     }
     
+    /**
+     * get random parameter for hash mechanism
+     * @return string | null
+     * @author Mustafa Zeynel Dağlı
+     */
     public function getNonce() {
         //if($this->nonce==null) $this->setNonce();
         //print_r('// get nonce()--'.$this->nonce.'//');
