@@ -9,7 +9,8 @@ class SlimHmacProxy extends \vendor\Proxy\Proxy {
      * to be executed
      * @var array()
      */
-    protected $redirectMap = array('getReports_test' => 'restApiDefaultCall');
+    protected $redirectMap = array('getReports_test' => 'restApiDefaultCall',
+                                   'getDynamicForm_test' => 'restApiDefaultCall',);
     
     /**
      * hmac object
