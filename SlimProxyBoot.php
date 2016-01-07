@@ -48,7 +48,16 @@ require_once 'vendor\Slim\SlimTestProxy.php';*/
 
 //$proxyClass = new \vendor\Slim\SlimTestProxy();
 $proxyClass = new \vendor\Slim\SlimHmacProxy();
-$proxyClass->setRestApiBaseUrl("http://localhost/slim_test/");
+// $proxyClass->setRestApiBaseUrl("http://localhost/Slim_SanalFabrika/");
+/**
+ * bazı browser larda crossdomain hataları oluştuğu için yapısal değişiklik yapıldı.  
+ * @since 23.12.2015
+ * @author Okan CIRAN
+ * 
+ */ 
+  $proxyClass->setRestApiBaseUrl("http://slim.sanalfabrika.com:9990/");
+  //$proxyClass->setRestApiBaseUrl("http://sanalfabrika.slim.com:9990/");
+//$proxyClass->setRestApiBaseUrl("https://slim.sanalfabrika.com/");
 $proxyClass->setRestApiEndPoint("index.php/");
 //$proxyClass->setEndPointUrl('http://88.249.18.205:8090/slim2_ecoman/index.php/');
 //$ecoman->setEndPointUrl('http://88.249.18.205:8090/slim2_ecoman/index.php/');

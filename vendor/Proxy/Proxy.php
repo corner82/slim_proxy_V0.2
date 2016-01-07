@@ -9,9 +9,21 @@
 
 namespace vendor\Proxy;
 
-class Proxy extends \vendor\Proxy\AbstractProxy {
+ class Proxy extends \vendor\Proxy\AbstractProxy implements PublicKeyRequiredInterface,
+                                                                    PublicKeyNotFoundInterface,
+                                                                    PrivateKeyNotFoundInterface,
+                                                                    UserNotRegisteredInterface
+{
     
     /**
+     * determines what will be done if private key not found
+     * @author Mustafa Zeynel Dağlı
+     * @var boolean
+     */
+     protected $privateKeyNotFoundRedirection = true;
+
+
+/**
      * invalid url format redirect url
      * @var string
      * @author Mustafa Zeynel Dağlı
@@ -42,8 +54,166 @@ class Proxy extends \vendor\Proxy\AbstractProxy {
      * @since version 0.2
      */
     protected $encryptKey = 'testKey';
-
     
+    
+    /**
+     * service pk required or not
+     * @var boolean
+     * @author Mustafa Zeynel Dağlı
+     * @since version 0.3
+     */
+    protected $isServicePkRequired = null;
+    
+    /**
+     * determine if public key not found
+     * @var boolean | null
+     * @author Mustafa Zeynel Dağlı
+     * @since version 0.3
+     */
+    protected $isPublicKeyNotFoundRedirect = true;
+    
+    /**
+     * determine if private key not found
+     * @var boolean | null
+     * @author Mustafa Zeynel Dağlı
+     * @since version 0.3
+     */
+    protected $isPrivateKeyNotFoundRedirect = true;
+    
+    /**
+     * determine if user not registered
+     * @var boolean | null
+     * @author Mustafa Zeynel Dağlı
+     * @since version 0.3
+     */
+    protected $isUserNotRegisteredRedirect = true;
+
+
+    public function __construct() {
+        //parent::__construct();
+    }
+    
+    /**
+     * user not registered process function, will be overridden by
+     * inherit classes
+     * @author Mustafa Zeynel Dağlı
+     * @since version 0.3
+     */
+    public function userNotRegisteredRedirect() {
+        
+    }
+    
+    /**
+     * get if to redirect due to user not registered  process
+     * @return boolean
+     * @author Mustafa Zeynel Dağlı
+     * @since version 0.3
+     */
+    public function getUserNotRegisteredRedirect() {
+        return $this->isUserNotRegisteredRedirect;
+    }
+    
+    /**
+     * set if to redirect due to user not registered  process
+     * @param boolean $boolean
+     * @author Mustafa Zeynel Dağlı
+     * @since version 0.3
+     */
+    public function setUserNotRegisteredRedirect($boolean = null) {
+        $this->isUserNotRegisteredRedirect = $boolean;
+    }
+
+    /**
+     * get if to redirect due to private key not found process
+     * @return type
+     * @author Mustafa Zeynel Dağlı
+     * @since version 0.3
+     */
+    public function getPrivateKeyNotFoundRedirect() {
+        return $this->isPrivateKeyNotFoundRedirect;
+    }
+    
+    /**
+     * set if to redirect due to private key not found process
+     * @param boolean $boolean
+     * @author Mustafa Zeynel Dağlı
+     * @since version 0.3
+     */
+    public function setPrivateKeyNotFoundRedirect($boolean = null) {
+        $this->isPrivateKeyNotFoundRedirect = $boolean;
+    }
+    
+    /**
+     * public key not found process function, will be overridden by
+     * inherit classes
+     * @author Mustafa Zeynel Dağlı
+     * @since version 0.3
+     */
+    public function privateKeyNotFoundRedirect() {
+        
+    }
+
+    /**
+     * public key not found process function, will be overridden by
+     * inherit classes
+     * @author Mustafa Zeynel Dağlı
+     * @since version 0.3
+     */
+    public function publicKeyNotFoundRedirect() {
+        
+    }
+    
+    /**
+     * get if to redirect due to public key not found process
+     * @return boolean 
+     * @author Mustafa Zeynel Dağlı
+     * @since version 0.3
+     */
+    public function getPublicKeyNotFoundRedirect() {
+        return $this->isPublicKeyNotFoundRedirect;
+    }
+    
+    /**
+     * set if to redirect due to public key not found process
+     * @param boolean | null $boolean 
+     * @author Mustafa Zeynel Dağlı
+     * @since version 0.3
+     */
+    public function setPublicKeyNotFoundRedirect($boolean = null) {
+        $this->isPublicKeyNotFoundRedirect = $boolean;
+    }
+    
+    
+    /**
+     * determine if service needs private and public key
+     * interragation
+     * @author Mustafa Zeynel Dağlı
+     * @since version 0.3
+     */
+     public function servicePkRequired() {
+         
+     }
+
+    /**
+     * set variable for private key not found strategy
+     * @param type $boolean
+     * @author Mustafa Zeynel Dağlı
+     * @since 05/01/2016 
+     */
+    protected function setPrivateKeyNotFoundRedirection($boolean) {
+        $this->privateKeyNotFoundRedirection = $boolean;
+    }
+    
+    /**
+     * get variable for private key not found strategy
+     * @return boolean
+     * @author Mustafa Zeynel Dağlı
+     * @since 05/01/2016
+     */
+    protected function getPrivateKeyNotFoundRedirection() {
+        return $this->privateKeyNotFoundRedirection;
+    }
+
     /**
      * set invalid call format redirect function
      * @param type $invalidCallFunc
@@ -73,10 +243,6 @@ class Proxy extends \vendor\Proxy\AbstractProxy {
      */
     protected function setInvalidCallUrl($invalidCallUrl) {
         return $this->invalidCallUrl = $invalidCallUrl;
-    }
-    
-    public function __construct() {
-        //parent::__construct();
     }
     
     /**
@@ -194,7 +360,21 @@ class Proxy extends \vendor\Proxy\AbstractProxy {
      */
     protected function resolveRedirectMap() {
         $this->getRestApiEndPointFunction();
-        return $this->redirectMap[$this->restApiEndPointFunction];
+        if(isset($this->redirectMap[$this->restApiEndPointFunction])) {
+            return $this->redirectMap[$this->restApiEndPointFunction];
+        } else {
+            try {
+                throw new \Exception('redirect map mapper bulunamadı');
+            } catch (\Exception $exc) {
+                //echo $exc->getTraceAsString();
+                echo $exc->getMessage();
+                exit();
+                //return false;
+            }
+
+            
+        }
+        
     }
     
     /**
